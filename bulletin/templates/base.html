@@ -26,6 +26,16 @@
         <li><a href="{% url 'start' %}">Базовый класс</a></li>
         <li><a href="{% url 'bullets' %}">Объявления</a></li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+            <li><div style="padding-top:15px"><i><b>Здраствуйте, {{ user.get_short_name }}</b></i></div></li>
+            <li><a href="{% url 'logout' %}">Выйти из {{ user.get_username }}</a></li>
+        {% else %}
+            <li><div style="padding-top:15px"><i><b>Вы вошли как Гость</b></i></div></li>
+            <li><a href="{% url 'signup' %}">Зарегистрироваться</a></li>
+            <li><a href="{% url 'login' %}">Войти</a></li>
+        {% endif %}
+      </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
