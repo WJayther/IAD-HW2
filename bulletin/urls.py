@@ -20,5 +20,10 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.ExampleView.as_view(), name='start'),
+    url(r'^bullets/', views.BulletsView.as_view(), name='bullets'),
+    url(r'^bullet/(?P<id>\d+)', views.BulletView.as_view(), name='bullet_url'),
+    #url(r'^signup/', views.registration, name='signup'),
+    #url(r'^login/', views.authorization, name='login'),
+    #url(r'^logout/', views.exit, name='logout'),
 ]
 
