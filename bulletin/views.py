@@ -25,7 +25,7 @@ class BulletsView(ListView):
     template_name = 'bullets.html'
     
     def get_queryset(self):
-        qs = Bullet.objects.all().order_by('id').values()
+        qs = Bullet.objects.all().order_by('-datetime')#.values()
         return qs
 
 class BulletView(View):
