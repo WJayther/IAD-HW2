@@ -12,6 +12,7 @@ class Bullet(models.Model):
 
 class MyUser(AbstractUser):
 	regdate = models.DateTimeField(auto_now_add=True)
+	testvar = 'Sterling'
 	
-	class Meta(AbstractUser.Meta):
-		swappable = 'AUTH_USER_MODEL'
+	#class Meta(AbstractUser.Meta):
+	#	swappable = 'AUTH_USER_MODEL'

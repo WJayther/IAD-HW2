@@ -25,7 +25,9 @@ SECRET_KEY = 'c=j63hv@24e+*n1mtb_d#w5qg+ey7&p(^t@*!o(1w+w5h3h2%v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.102']
+ALLOWED_HOSTS = ['localhost','192.168.0.102']
+
+AUTH_USER_MODEL = 'bulletin.MyUser'
 
 
 # Application definition
