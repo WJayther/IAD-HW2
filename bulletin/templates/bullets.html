@@ -5,7 +5,7 @@
 {% block body %}
     <ul class="list-group">
         {% for bullet in bullets %}
-            <li class="list-group-item"><a href="{% url 'bullet_url' bullet.id %}"><b>{{bullet.id}} &ndash; {{ bullet.name }}</b> <small>{{ bullet.datetime }}</small></a> by <a href="#">{{ bullet.user_posted }}</a></li>
+            <li class="list-group-item"><a href="{% url 'bullet_url' bullet.id %}"><b>{{bullet.id}} &ndash; {{ bullet.name }}</b> <small>{{ bullet.datetime }}</small></a> by <a href="{% url 'user_url' bullet.user_posted_id %}">{{ bullet.user_posted }}</a></li>
         {% empty %}
             <li class="list-group-item disabled">empty list</li>
         {% endfor %}

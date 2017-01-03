@@ -25,13 +25,26 @@ class BulletsView(ListView):
     template_name = 'bullets.html'
     
     def get_queryset(self):
-        qs = Bullet.objects.all().order_by('-datetime')#.values()
+        qs = Bullet.objects.all().order_by('-datetime')
         return qs
 
 class BulletView(View):
     def get(self, request, id):
         data = Bullet.objects.get(id__exact=id)
         return render(request, 'bullet.html', {'bullet':data})
+
+class UsersView(ListView):
+    context_object_name = 'users'
+    template_name = 'users.html'
+    
+    def get_queryset(self):
+        qs = auth.get_user_model().objects.all().order_by('-date_joined')
+        return qs
+
+class UserView(View):
+    def get(self, request, id):
+        data = auth.get_user_model().objects.get(id__exact=id)
+        return render(request, 'user.html', {'selected_user':data})
 
 def registration(request):
     if request.method == 'POST':

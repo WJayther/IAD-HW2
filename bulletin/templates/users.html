@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block body %}
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <a href="{% url 'user_url' user.id %}">
+                    <b>{{user.id}} &ndash; {{ user }}</b>
+                    <small>зарегистрирован {{ user.date_joined }}</small>
+                </a>
+            </li>
+        {% empty %}
+            <li class="list-group-item disabled">empty list</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
