@@ -3,7 +3,14 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from bulletin.models import Bullet
 
+
+class BulletForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Bullet
+        exclude = ('user_posted',)
 
 class LoginForm(forms.Form):
     login = forms.CharField(label='Логин')
@@ -17,6 +24,7 @@ class RegistrationForm(forms.Form):
     email = forms.CharField(label='Адрес электронной Почты')
     first_name = forms.CharField(label='Имя')
     last_name = forms.CharField(label='Фамилия')
+    avatar = forms.ImageField()
 
     def clean_login(self):
         user_model = get_user_model()
@@ -47,5 +55,6 @@ class RegistrationForm(forms.Form):
                                         password=self.cleaned_data['password'],
                                         first_name=self.cleaned_data['first_name'],
                                         last_name=self.cleaned_data['last_name'],
+                                        avatar = self.cleaned_data['avatar'],
                                         )
         return user

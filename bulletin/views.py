@@ -48,7 +48,7 @@ class UserView(View):
 
 def registration(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             #return redirect(reverse('bullets'))
@@ -57,6 +57,22 @@ def registration(request):
     else:
         form = RegistrationForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required
+def post_bullet(request):
+    instance = Bullet(user_posted=request.user)
+    if request.method == 'POST':
+        form = BulletForm(request.POST)
+        if form.is_valid():
+            bullet = form.save(commit=False)
+            bullet.user_posted = request.user
+            print(bullet.user_posted.id)
+            bullet.save()
+            return redirect(reverse('bullets'))
+        return render(request, 'post_bullet.html', {'form': form})
+    else:
+        form = BulletForm()
+    return render(request, 'post_bullet.html', {'form': form})
 
 def authorization(request):
     redirect_url = reverse('bullets')

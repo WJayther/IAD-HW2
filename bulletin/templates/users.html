@@ -7,7 +7,7 @@
         {% for user in users %}
             <li class="list-group-item">
                 <a href="{% url 'user_url' user.id %}">
-                    <b>{{user.id}} &ndash; {{ user }}</b>
+                    <b><img src={{ user.avatar.url }} style="max-height:50px;margin-right:5px"/>{{ user }}</b>
                     <small>зарегистрирован {{ user.date_joined }}</small>
                 </a>
             </li>

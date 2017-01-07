@@ -15,6 +15,9 @@ Including another URLconf
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
 
 from . import views
 
@@ -25,7 +28,11 @@ urlpatterns = [
     url(r'^users/', views.UsersView.as_view(), name='users'),
     url(r'^user/(?P<id>\d+)', views.UserView.as_view(), name='user_url'),
     url(r'^signup/', views.registration, name='signup'),
+    url(r'^post_bullet/', views.post_bullet, name='post_bullet'),
     url(r'^login/', views.authorization, name='login'),
     url(r'^logout/', views.exit, name='logout'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
 

@@ -23,13 +23,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
-        <li><a href="{% url 'start' %}">Базовый класс</a></li>
+        <!--<li><a href="{% url 'start' %}">Базовый класс</a></li>-->
         <li><a href="{% url 'bullets' %}">Объявления</a></li>
         <li><a href="{% url 'users' %}">Пользователи</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'post_bullet' %}">Новое объявление</a></li>
+        {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
-            <li><div style="padding-top:15px"><i><b>Здраствуйте, {{ user.get_short_name }}</b></i></div></li>
+            <li><div><i><b>Здраствуйте, {{ user.get_short_name }}</b></i><img src={{ user.avatar.url }} style="max-height:50px;margin-left:5px"/></div></li>
             <li><a href="{% url 'logout' %}">Выйти из {{ user.get_username }}</a></li>
         {% else %}
             <li><div style="padding-top:15px"><i><b>Вы вошли как Гость</b></i></div></li>

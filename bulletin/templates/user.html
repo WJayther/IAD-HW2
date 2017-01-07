@@ -3,6 +3,7 @@
 {% block title %}Пользователь №{{ selected_user.id }} &ndash; {{ selected_user }}{% endblock %}
 
 {% block body %}
+<img src={{ selected_user.avatar.url }} style="max-height:250px;margin-left:50px"/>
 <h1>Пользователь №{{ selected_user.id }} &ndash; {{ selected_user }}<br> <small>Зарегистрирован {{ selected_user.date_joined }}</small></h1>
 <p>{{ selected_user.get_full_name }}</p>
 {% endblock %}
