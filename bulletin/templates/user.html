@@ -6,4 +6,36 @@
 <img src={{ selected_user.avatar.url }} style="max-height:250px;margin-left:50px"/>
 <h1>Пользователь №{{ selected_user.id }} &ndash; {{ selected_user }}<br> <small>Зарегистрирован {{ selected_user.date_joined }}</small></h1>
 <p>{{ selected_user.get_full_name }}</p>
+<h2>Подписан на:</h2>
+<ul class="list-group">
+    {% for fed_user in selected_user.follows.all %}
+        <li class="list-group-item">
+            <a href="{% url 'user_url' fed_user.id %}">
+                <b><img src={{ fed_user.avatar.url }} style="max-height:50px;margin-right:5px"/>{{ fed_user }}</b>
+            </a>
+        </li>
+    {% empty %}
+        <li class="list-group-item disabled">Пользователь ни на кого не подписан</li>
+    {% endfor %}
+</ul>
+<h2>Подписчики:</h2>
+<ul class="list-group">
+    {% for fer_user in selected_user.followers.all %}
+        <li class="list-group-item">
+            <a href="{% url 'user_url' fer_user.id %}">
+                <b><img src={{ fer_user.avatar.url }} style="max-height:50px;margin-right:5px"/>{{ fer_user }}</b>
+            </a>
+        </li>
+    {% empty %}
+        <li class="list-group-item disabled">На пользователя никто не подписан</li>
+    {% endfor %}
+</ul>
+<h2>Стена:</h2>
+<ul class="list-group">
+    {% for fed_bullet in wall_bullets %}
+        <li class="list-group-item"><a href="{% url 'bullet_url' fed_bullet.id %}"><b>{{fed_bullet.id}} &ndash; {{ fed_bullet.name }}</b> <small>{{ fed_bullet.datetime }}</small></a> by <a href="{% url 'user_url' fed_bullet.user_posted_id %}"><img src={{ fed_bullet.user_posted.avatar.url }} style="max-height:50px;margin-right:5px"/>{{ fed_bullet.user_posted }}</a></li>
+    {% empty %}
+        <li class="list-group-item disabled">Нет объявлений</li>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -4,15 +4,24 @@
 
 {% block body %}
     <ul class="list-group">
-        {% for user in users %}
+        {% for d_user in users %}
             <li class="list-group-item">
-                <a href="{% url 'user_url' user.id %}">
-                    <b><img src={{ user.avatar.url }} style="max-height:50px;margin-right:5px"/>{{ user }}</b>
-                    <small>зарегистрирован {{ user.date_joined }}</small>
+                <a href="{% url 'user_url' d_user.id %}">
+                    <b><img src={{ d_user.avatar.url }} style="max-height:50px;margin-right:5px"/>{{ d_user }}</b>
+                    <small>зарегистрирован {{ d_user.date_joined }}</small>
                 </a>
+                {% if user.is_authenticated %}
+                    {% if user.id != d_user.id %}
+                    <button type="button" class="btn btn-primary followBTN" user_id="{{ d_user.id }}">Follow</button>
+                    <button type="button" class="btn btn-danger unfollowBTN" user_id="{{ d_user.id }}">UnFollow</button>
+                    {% endif %}
+                {% endif %}
             </li>
         {% empty %}
             <li class="list-group-item disabled">empty list</li>
         {% endfor %}
     </ul>
+<script type="text/javascript"> 
+   var cur_user_id = "{{ user.id }}";
+</script>
 {% endblock %}

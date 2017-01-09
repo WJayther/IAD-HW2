@@ -44,7 +44,33 @@ class UsersView(ListView):
 class UserView(View):
     def get(self, request, id):
         data = auth.get_user_model().objects.get(id__exact=id)
-        return render(request, 'user.html', {'selected_user':data})
+        bullets = list(data.bullets.all())
+        for followed in data.follows.all():
+            for bullet in followed.bullets.all():
+                bullets.append(bullet)
+        return render(request, 'user.html', {'selected_user':data, 'wall_bullets':sorted(bullets, key = lambda b:b.datetime, reverse=True)})
+
+@login_required
+def user_follows(request, id, fid):
+    if id == fid :
+        return HttpResponse('Нельзя подписаться на самого себя и баловаться с адресной строкой')
+    fer_user = MyUser.objects.filter(id__exact=id)[0]
+    fed_user = MyUser.objects.filter(id__exact=fid)[0]
+    if fed_user in fer_user.follows.all():
+        return HttpResponse('Вы уже подписаны на него')
+    fer_user.follows.add(fed_user)
+    return HttpResponse('Вы успешно подписались на {}'.format(fed_user.get_username()))
+
+@login_required
+def user_unfollows(request, id, fid):
+    if id == fid :
+        return HttpResponse('Нельзя отписаться от самого себя и баловаться с адресной строкой')
+    fer_user = MyUser.objects.filter(id__exact=id)[0]
+    fed_user = MyUser.objects.filter(id__exact=fid)[0]
+    if fed_user in fer_user.follows.all():
+        fer_user.follows.remove(fed_user)
+        return HttpResponse('Вы отписались от {}'.format(fed_user.get_username()))
+    return HttpResponse('Вы не были подписаны на {}'.format(fed_user.get_username()))
 
 def registration(request):
     if request.method == 'POST':
