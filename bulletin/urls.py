@@ -27,8 +27,14 @@ urlpatterns = [
     url(r'^bullet/(?P<id>\d+)', views.BulletView.as_view(), name='bullet_url'),
     url(r'^users/', views.UsersView.as_view(), name='users'),
     url(r'^user/(?P<id>\d+)/$', views.UserView.as_view(), name='user_url'),
-    url(r'^user/(?P<id>\d+)/follows/(?P<fid>\d+)$', views.user_follows, name='user_flw'),
-    url(r'^user/(?P<id>\d+)/unfollows/(?P<fid>\d+)$', views.user_unfollows, name='user_uflw'),
+    url(
+       r'^user/(?P<id>\d+)/follows/(?P<fid>\d+)$',
+       views.user_follows,
+       name='user_flw'),
+    url(
+       r'^user/(?P<id>\d+)/unfollows/(?P<fid>\d+)$',
+       views.user_unfollows,
+       name='user_uflw'),
     url(r'^signup/', views.registration, name='signup'),
     url(r'^post_bullet/', views.post_bullet, name='post_bullet'),
     url(r'^login/', views.authorization, name='login'),
@@ -37,4 +43,3 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()
-
